@@ -2,6 +2,7 @@ package play.libs.ws;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.basic.DefaultOAuthConsumer;
+import oauth.signpost.signature.PlainTextMessageSigner;
 import play.Logger;
 import play.Play;
 import play.libs.IO;
@@ -214,6 +215,7 @@ public class WSUrlFetch implements WSImpl {
 
                 if (this.oauthToken != null && this.oauthSecret != null) {
                     OAuthConsumer consumer = new DefaultOAuthConsumer(oauthInfo.consumerKey, oauthInfo.consumerSecret);
+                    consumer.setMessageSigner(new PlainTextMessageSigner());
                     consumer.setTokenWithSecret(oauthToken, oauthSecret);
                     consumer.sign(connection);
                 }
