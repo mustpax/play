@@ -278,6 +278,7 @@ def autotest(app, args):
     try:
         if subprocess.call(java_cmd, env=os.environ):
             print 'testrunner process exited with non-zero exit code.'
+            subprocess.call(['curl', '-v', '%s://localhost:%s/@tests.lists' % (protocol, http_port)], env=os.environ)
             sys.exit(1)
     except OSError:
         print "Could not execute the headless browser. "
