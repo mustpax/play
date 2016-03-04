@@ -276,7 +276,9 @@ def autotest(app, args):
     if protocol == 'https':
         java_cmd.insert(-1, '-Djavax.net.ssl.trustStore=' + app.readConf('keystore.file'))
     try:
-        subprocess.call(java_cmd, env=os.environ)
+        if subprocess.call(java_cmd, env=os.environ):
+            print 'testrunner process exited with non-zero exit code.'
+            sys.exit(1)
     except OSError:
         print "Could not execute the headless browser. "
         sys.exit(-1)
